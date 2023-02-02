@@ -1,0 +1,89 @@
+<div id="myModal" class="modal" *ngIf="isOpenAddNew">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span  (click)="toggleAddNewQuestion()" class="close">&times;</span>
+    <div *ngIf="isOpenAddNew" class="col-12">
+      <h4>Add a New Questions</h4>
+
+      <form [formGroup]="formAddQuestion" (ngSubmit)="addNewQuestion()">
+        <label>
+          <input [(ngModel)]="newQuestionType" (change)="handleQuestionTypeChange($event)" type="radio" value="paragraph" formControlName="newQuestionType">
+            <span>Paragraph</span>
+        </label>
+        <label>
+          <input [(ngModel)]="newQuestionType" (change)="handleQuestionTypeChange($event)" type="radio" value="checkboxList" formControlName="newQuestionType">
+            <span>Checkbox</span>
+        </label>
+        <div *ngIf="newQuestionType=='paragraph';else newCheckboxListTemplate">
+          <div class="new-paragraph">
+            <p class="mt-3">Question title</p>
+            <input  type="text" formControlName="newQuestion">
+          </div>
+        </div>
+        <ng-template #newCheckboxListTemplate>
+          <div class="new-checkbox-list">
+            <p class="mt-3">Question title</p>
+            <input  type="text" formControlName="newQuestion">
+          </div>
+          <div class="new-checkbox-list">
+            <div class="row" formArrayName="answers" *ngFor="let data of formAnswersArray.controls; let i = index">
+              <div class="col-12">
+                <input class="mt-3" type="text" [formControlName]="i"/>
+              </div>
+            </div>
+           
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a (click)="addNewAnswer()">+ Add answer</a>
+            </div>
+          </div>
+        </ng-template>
+
+        <button class="mt-3">Submit</button>
+     </form>
+
+    </div>
+  </div>
+
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-7">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div *ngIf="formDataArray.controls.length">
+          <div class="row mt-4" formArrayName="formData" *ngFor="let data of formDataArray.controls; let i = index">
+            <div *ngIf="formData[i]?.question" class="col-12">{{formData[i].question}}</div>
+  
+            <div *ngIf="formData[i]?.type ==='paragraph';else checkboxListTemplate">
+              <textarea [formControlName]="i"></textarea>
+            </div>
+          <ng-template #checkboxListTemplate>
+            <div class="row" *ngFor="let answer of formData[i]?.answers; let idx = index">
+              <div class="col-1">
+              <input [formControlName]="i" (change)="checkboxChange($event, answer, i)" type="checkbox">
+              </div>
+              <div class="col-10">
+              <label>{{answer.title}}</label>
+              </div>
+            </div>
+          </ng-template>
+            <!-- <input (change)="submit()" type="checkbox" [formControlName]="i"> -->
+           
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12">
+            <a class="add-new-question" (click)="toggleAddNewQuestion()">add new question</a>
+          </div>
+        </div>
+        <button class="mt-3">Review my answers ></button>
+      </form>
+     
+    </div>
+    
+  </div>
+
+  
+</div>
