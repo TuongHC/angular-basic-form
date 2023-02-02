@@ -1,33 +1,29 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h2>Show the user’s selections on a preview page.</h2>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>Show the user’s selections on a preview page.</h2>
     </div>
-    <div class="row">
-      <div class="col-12" >
-        <div>
-          <div *ngFor="let item of answersList">
-            <h4 class="question">{{ item.question }}</h4>
-            <div *ngIf="item.type ==='paragraph';else checkboxAnswers">
-              <p>{{item.answer}}</p>
-            </div>
-            <ng-template #checkboxAnswers>
-              <div *ngFor="let answer of item.answers">
-                <div [class.d-none]="!answer.selected">
-                  {{answer.title}}
-                </div>
-              </div>
-            </ng-template>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <div *ngFor="let item of answersList">
+          <h4 class="question">{{ item.question }}</h4>
+          <div *ngIf="item.type === 'paragraph'; else checkboxAnswers">
+            <p>{{ item.answer }}</p>
           </div>
+          <ng-template #checkboxAnswers>
+            <div *ngFor="let answer of item.answers">
+              <div [class.d-none]="!answer.selected">
+                {{ answer.title }}
+              </div>
+            </div>
+          </ng-template>
         </div>
-        <div class="back">
-          <a [routerLink]="['/form/builder']">
-            Back to Forms Builder
-          </a>
-        </div>
-        
+      </div>
+      <div class="back">
+        <a [routerLink]="['/form/builder']"> Back to Forms Builder </a>
       </div>
     </div>
+  </div>
 </div>
-  

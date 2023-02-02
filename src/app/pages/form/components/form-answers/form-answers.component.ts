@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -8,25 +12,19 @@ import { FormService } from '../../services/form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormAnswersComponent {
-  public answersList: any = []
+  public answersList: any = [];
   constructor(
     private formService: FormService,
-    private cd: ChangeDetectorRef,
-  ) {
-  }
-
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.getAnswers()
+    this.getAnswers();
   }
-
   getAnswers() {
-    this.formService.getAnswers().subscribe(answers =>{
-      this.answersList = answers
-      debugger
+    this.formService.getAnswers().subscribe((answers) => {
+      this.answersList = answers;
       this.cd.detectChanges();
-    })
+    });
   }
-
- 
 }
